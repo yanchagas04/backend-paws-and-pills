@@ -1,10 +1,10 @@
 import requests
-from src.utils.constants import DOGS_API_URL, DOGS_CATS_API_KEY
+from src.utils.constants import CATS_API_URL, DOGS_CATS_API_KEY
 
-async def get_dog_breeds():
+async def get_cat_breeds():
     breed_list = []
     response = requests.get(
-            DOGS_API_URL, 
+            CATS_API_URL, 
             headers={'X-Api-Key': DOGS_CATS_API_KEY},
             params={'max_weight': 200}
         )
