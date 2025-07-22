@@ -1,0 +1,1 @@
+DOGS_API_URL="https://api.api-ninjas.com/v1/dogs"
