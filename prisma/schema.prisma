@@ -1,0 +1,82 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-py"
+    output   = "../libs/prisma-client"
+}
+
+model User {
+    id      String @id @default(uuid())
+    name    String
+    email   String
+    password   String
+    Dogs   Dog[]    
+    Cats   Cat[]
+    image   String?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    deletedAt DateTime?
+}
+
+model Medicine {
+    id      String @id @default(uuid())
+    name    String
+    description String
+    amount  Float
+    periodic  Boolean
+    periodicity Periodicity?
+    doses Dose[]
+    startDate   DateTime 
+    endDate   DateTime?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    deletedAt DateTime?
+}
+
+model Dog {
+    id      String @id @default(uuid())
+    name    String
+    owner   User @relation(fields: [ownerId], references: [id])
+    ownerId String
+    weight  Float
+    birthday   DateTime
+    breed    String
+    image   String?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    deletedAt DateTime?
+}
+
+model Cat {
+    id      String @id @default(uuid())
+    name    String
+    owner   User @relation(fields: [ownerId], references: [id])
+    breed    String
+    ownerId String
+    weight  Float
+    birthday   DateTime
+    image   String?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    deletedAt DateTime
+}
+
+model Dose {
+    id      String @id @default(uuid())
+    medicine   Medicine @relation(fields: [medicineId], references: [id])
+    medicineId String
+    date   DateTime
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    deletedAt DateTime?
+}
+
+enum Periodicity {
+    DAILY
+    WEEKLY
+    MONTHLY
+    YEARLY
+}
