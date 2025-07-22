@@ -5,7 +5,7 @@ datasource db {
 
 generator client {
     provider = "prisma-client-py"
-    output   = "libs/prisma-client"
+    output   = "../libs/prisma-client"
 }
 
 model User {
@@ -15,9 +15,10 @@ model User {
     password   String
     Dogs   Dog[]    
     Cats   Cat[]
+    image   String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    deletedAt DateTime
+    deletedAt DateTime?
 }
 
 model Medicine {
@@ -32,7 +33,7 @@ model Medicine {
     endDate   DateTime?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    deletedAt DateTime
+    deletedAt DateTime?
 }
 
 model Dog {
@@ -43,9 +44,10 @@ model Dog {
     weight  Float
     birthday   DateTime
     breed    String
+    image   String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    deletedAt DateTime
+    deletedAt DateTime?
 }
 
 model Cat {
@@ -56,6 +58,7 @@ model Cat {
     ownerId String
     weight  Float
     birthday   DateTime
+    image   String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     deletedAt DateTime
@@ -68,7 +71,7 @@ model Dose {
     date   DateTime
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    deletedAt DateTime
+    deletedAt DateTime?
 }
 
 enum Periodicity {
