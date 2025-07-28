@@ -9,4 +9,4 @@ class UserSchema(BaseModel):
 
 class UserResponseSchema(BaseModel):
     status: str
-    user: UserSchema
+    user: UserSchema | None

@@ -15,4 +15,4 @@ class PetListResponseSchema(BaseModel):
 
 class PetResponseSchema(BaseModel):
     status: str
-    Pet: PetSchema
+    Pet: PetSchema | None

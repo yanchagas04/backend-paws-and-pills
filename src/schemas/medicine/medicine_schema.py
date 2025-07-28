@@ -16,4 +16,4 @@ class MedicineListResponseSchema(BaseModel):
 
 class MedicineResponseSchema(BaseModel):
     status: str
-    medicine: MedicineSchema
+    medicine: MedicineSchema | None
