@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class AnimalSchema(BaseModel):
+class PetSchema(BaseModel):
     id: str
     name: str
     weight: float
@@ -9,10 +9,10 @@ class AnimalSchema(BaseModel):
     image: str | None
     type: str
 
-class AnimalListResponseSchema(BaseModel):
+class PetListResponseSchema(BaseModel):
     status: str
-    animals: list[AnimalSchema]
+    Pets: list[PetSchema]
 
-class AnimalResponseSchema(BaseModel):
+class PetResponseSchema(BaseModel):
     status: str
-    animal: AnimalSchema
+    Pet: PetSchema
