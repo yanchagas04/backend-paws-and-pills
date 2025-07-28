@@ -1,12 +1,14 @@
-from lib.prisma import Prisma
+from lib.prisma.client import Prisma
 from src.schemas.user.user_schema import UserSchema, UserResponseSchema
 
+
 class UserService:
+    prisma = Prisma()
 
     async def get_user(self, id: str) -> UserResponseSchema:
-        await Prisma.connect()
+        await self.prisma.connect()
         try:
-            user = await Prisma.user.find_unique(
+            user = await self.prisma.user.find_unique(
                 where={
                     'id': id
                 }
@@ -22,12 +24,12 @@ class UserService:
             else:
                 return None
         finally:
-            await Prisma.close()
+            print("finally")
 
     async def create_user(self, user: UserSchema) -> UserResponseSchema:
-        await Prisma.connect()
+        await self.prisma.connect()
         try:
-            user = await Prisma.user.create(
+            user = await self.prisma.user.create(
                 data={
                     'name': user.name,
                     'email': user.email,
@@ -46,12 +48,12 @@ class UserService:
                 )
             )
         finally:
-            await Prisma.close()
+            print("finally")
         
     async def update_user(self, id: str, user: UserSchema) -> UserResponseSchema:
-        await Prisma.connect()
+        await self.prisma.connect()
         try:
-            user = await Prisma.user.update(
+            user = await self.prisma.user.update(
                 where={
                     'id': id
                 },
@@ -73,12 +75,12 @@ class UserService:
                 )
             )
         finally:
-            await Prisma.close()
+            print("finally")
 
     async def delete_user(self, id: str) -> UserResponseSchema:
-        await Prisma.connect()
+        await self.prisma.connect()
         try:
-            user = await Prisma.user.delete(
+            user = await self.prisma.user.delete(
                 where={
                     'id': id
                 }
@@ -94,4 +96,4 @@ class UserService:
                 )
             )
         finally:
-            await Prisma.close()
+            print("finally")
