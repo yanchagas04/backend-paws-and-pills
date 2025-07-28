@@ -1,5 +1,5 @@
 import requests
-from src.utils.constants import CATS_API_URL, DOGS_CATS_API_KEY
+from utils.env_constants import CATS_API_URL, DOGS_CATS_API_KEY
 
 async def get_cat_breeds():
     breed_list = []
