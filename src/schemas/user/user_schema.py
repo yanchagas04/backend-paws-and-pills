@@ -1,12 +1,12 @@
 from pydantic import BaseModel
 
-class User(BaseModel):
+class UserSchema(BaseModel):
     id: str
     name: str
     email: str
     password: str
     image: str
 
-class UserResponse(BaseModel):
+class UserResponseSchema(BaseModel):
     status: str
-    user: User
+    user: UserSchema
