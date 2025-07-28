@@ -6,3 +6,7 @@ class User(BaseModel):
     email: str
     password: str
     image: str
+
+class UserResponse(BaseModel):
+    status: str
+    user: User
