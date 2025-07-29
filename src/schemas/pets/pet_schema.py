@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 class PetSchema(BaseModel):
-    id: str
+    id: str | None
     name: str
     weight: float
     birthday: str
