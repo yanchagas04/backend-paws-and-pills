@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 class MedicineSchema(BaseModel):
-    id: str
+    id: str | None
     name: str
     description: str
     amount: float
