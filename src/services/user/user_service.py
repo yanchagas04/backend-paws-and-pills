@@ -1,9 +1,27 @@
 from lib.prisma.client import Prisma
 from src.schemas.user.user_schema import UserSchema, UserResponseSchema
-
+from typing import List
 
 class UserService:
     prisma = Prisma()
+    
+    async def get_users(self) -> List[UserSchema]:
+        await self.prisma.connect()
+        try:
+            users = await self.prisma.user.find_many()
+            if not users:
+                return []
+            if len(users) == 0:
+                return []
+            return [UserSchema(
+                id=user.id,
+                name=user.name,
+                email=user.email,
+                password=user.password,
+                image=user.image,
+            ) for user in users]
+        finally:
+            await self.prisma.disconnect()
 
     async def get_user(self, id: str) -> UserResponseSchema:
         await self.prisma.connect()
@@ -24,7 +42,7 @@ class UserService:
             else:
                 return None
         finally:
-            print("finally")
+            await self.prisma.disconnect()
 
     async def create_user(self, user: UserSchema) -> UserResponseSchema:
         await self.prisma.connect()
@@ -48,7 +66,7 @@ class UserService:
                 )
             )
         finally:
-            print("finally")
+            await self.prisma.disconnect()
         
     async def update_user(self, id: str, user: UserSchema) -> UserResponseSchema:
         await self.prisma.connect()
@@ -75,7 +93,7 @@ class UserService:
                 )
             )
         finally:
-            print("finally")
+            await self.prisma.disconnect()
 
     async def delete_user(self, id: str) -> UserResponseSchema:
         await self.prisma.connect()
@@ -96,4 +114,4 @@ class UserService:
                 )
             )
         finally:
-            print("finally")
+            await self.prisma.disconnect()
