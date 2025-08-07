@@ -1,11 +1,12 @@
 from lib.prisma.client import Prisma
 from src.schemas.user.user_schema import UserSchema, UserResponseSchema
+from src.schemas.erro.error_schema import ErrorSchema
 from typing import List
 
 class UserService:
     prisma = Prisma()
     
-    async def get_users(self) -> List[UserSchema]:
+    async def get_users(self) -> List[UserSchema] | ErrorSchema:
         await self.prisma.connect()
         try:
             users = await self.prisma.user.find_many()
@@ -23,7 +24,7 @@ class UserService:
         finally:
             await self.prisma.disconnect()
 
-    async def get_user(self, id: str) -> UserResponseSchema:
+    async def get_user(self, id: str) -> UserResponseSchema | None | ErrorSchema:
         await self.prisma.connect()
         try:
             user = await self.prisma.user.find_unique(
@@ -44,7 +45,7 @@ class UserService:
         finally:
             await self.prisma.disconnect()
 
-    async def create_user(self, user: UserSchema) -> UserResponseSchema:
+    async def create_user(self, user: UserSchema) -> UserResponseSchema | ErrorSchema:
         await self.prisma.connect()
         try:
             user = await self.prisma.user.create(
@@ -65,10 +66,15 @@ class UserService:
                     image=user.image
                 )
             )
+        except Exception as e:
+            return ErrorSchema(
+                status='error',
+                message=str(e)
+            )
         finally:
             await self.prisma.disconnect()
         
-    async def update_user(self, id: str, user: UserSchema) -> UserResponseSchema:
+    async def update_user(self, id: str, user: UserSchema) -> UserResponseSchema | ErrorSchema:
         await self.prisma.connect()
         try:
             user = await self.prisma.user.update(
@@ -95,7 +101,7 @@ class UserService:
         finally:
             await self.prisma.disconnect()
 
-    async def delete_user(self, id: str) -> UserResponseSchema:
+    async def delete_user(self, id: str) -> UserResponseSchema | ErrorSchema:
         await self.prisma.connect()
         try:
             user = await self.prisma.user.delete(
